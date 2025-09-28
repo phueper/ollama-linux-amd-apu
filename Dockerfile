@@ -3,7 +3,7 @@
 ARG FLAVOR=${TARGETARCH}
 ARG PARALLEL=8
 
-ARG ROCMVERSION=6.3.4
+ARG ROCMVERSION=6.4.4
 ARG JETPACK5VERSION=r35.4.1
 ARG JETPACK6VERSION=r36.4.0
 ARG CMAKEVERSION=3.31.2
@@ -138,7 +138,7 @@ FROM ${FLAVOR} AS archive
 COPY --from=cpu dist/lib/ollama /lib/ollama
 COPY --from=build /bin/ollama /bin/ollama
 
-FROM ubuntu:25.04
+FROM ubuntu:25.10
 RUN apt-get update \
     && apt-get install -y ca-certificates \
     && apt-get clean \
