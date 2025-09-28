@@ -238,7 +238,11 @@ struct ggml_backend_registry {
         dl_handle_ptr handle { dl_load_library(path) };
         if (!handle) {
             if (!silent) {
+#ifdef _WIN32
                 GGML_LOG_ERROR("%s: failed to load %s\n", __func__, path_str(path).c_str());
+#else
+                GGML_LOG_ERROR("%s: failed to load %s: %s\n", __func__, path_str(path).c_str(), dlerror());
+#endif
             }
             return nullptr;
         }
