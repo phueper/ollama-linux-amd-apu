@@ -514,8 +514,9 @@ func (s *llamaServer) Load(ctx context.Context, gpus discover.GpuInfoList, requi
 	}
 
 	gpus = g
+	slog.Debug("found potential gpu candidates", "count", len(gpus), "estimate", s.estimate)
 	s.estimate = estimateGPULayers(gpus, s.ggml, []string{s.loadRequest.ProjectorPath}, s.options, s.numParallel)
-
+    slog.Debug("after estimate gpu candidates", "count", len(gpus), "estimate", s.estimate, "gpus", gpus)
 	if len(gpus) > 1 || gpus[0].Library != "cpu" {
 		switch {
 		case gpus[0].Library == "metal" && s.estimate.VRAMSize > systemInfo.System.TotalMemory:
@@ -524,6 +525,7 @@ func (s *llamaServer) Load(ctx context.Context, gpus discover.GpuInfoList, requi
 			s.options.NumGPU = 0
 		case gpus[0].Library != "metal" && s.estimate.Layers == 0:
 			// Don't bother loading into the GPU if no layers can fit
+			slog.Debug("no layers can fit GPU, using CPU", "estimate Layers", s.estimate.Layers)
 			gpus = discover.GetCPUInfo()
 		case s.options.NumGPU < 0 && s.estimate.Layers > 0 && gpus[0].Library != "cpu":
 			s.options.NumGPU = s.estimate.Layers
@@ -571,14 +573,22 @@ func (s *llamaServer) Load(ctx context.Context, gpus discover.GpuInfoList, requi
 		}
 	}
 
+    slog.Debug("waiting for runner...")
+
 	if err := s.waitUntilRunnerLaunched(ctx); err != nil {
+        slog.Debug("waiting for runner failed", "err", err)
 		return err
 	}
+
+    slog.Debug("waiting for runner done.")
 
 	resp, err := s.initModel(ctx, s.loadRequest, LoadOperationCommit)
 	if err != nil {
 		return err
 	}
+
+    slog.Debug("initModel done.")
+
 
 	// On the Ollama engine, we can print out a summary of the memory allocations.
 	// We don't have this for the llama engine but it does something similar itself.
