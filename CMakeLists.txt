@@ -98,8 +98,8 @@ check_language(HIP)
 if(CMAKE_HIP_COMPILER)
     set(HIP_PLATFORM "amd")
 
+    find_package(hip REQUIRED)
     if(NOT AMDGPU_TARGETS)
-        find_package(hip REQUIRED)
         list(FILTER AMDGPU_TARGETS INCLUDE REGEX "^gfx(900|94[012]|101[02]|1030|110[012]|120[01])$")
     endif()
 
