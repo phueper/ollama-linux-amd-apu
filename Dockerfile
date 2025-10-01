@@ -140,10 +140,7 @@ COPY --from=build /bin/ollama /bin/ollama
 
 FROM ubuntu:25.10
 RUN apt-get update \
-    && apt-get install -y \
-      ca-certificates \
-      rocminfo \
-      libroctx64-4 \
+    && apt-get install -y ca-certificates rocminfo libroctx64-4 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=archive /bin /usr/bin
