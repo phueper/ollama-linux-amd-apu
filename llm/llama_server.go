@@ -1527,6 +1527,8 @@ type llamaServerTokenProb struct {
 
 func (s *llamaServerRunner) Completion(ctx context.Context, req CompletionRequest, fn func(CompletionResponse)) error {
 	slog.Debug("llama-server completion request", "media", len(req.Media), "prompt_len", len(req.Prompt))
+	// 	phueper: log prompt in Info level to check our prompts
+	slog.Info("llama-server completion request", "prompt", req.Prompt)
 
 	if req.Options == nil {
 		opts := api.DefaultOptions()
