@@ -1537,6 +1537,8 @@ type CompletionResponse struct {
 
 func (s *llmServer) Completion(ctx context.Context, req CompletionRequest, fn func(CompletionResponse)) error {
 	slog.Debug("completion request", "images", len(req.Images), "prompt", len(req.Prompt), "format", string(req.Format))
+	// 	phueper: log prompt in Info level to check our prompts
+	slog.Info("completion request", "prompt", req.Prompt)
 	logutil.Trace("completion request", "prompt", req.Prompt)
 
 	if len(req.Format) > 0 {
