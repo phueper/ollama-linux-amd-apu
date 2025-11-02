@@ -429,7 +429,7 @@ func StartRunner(ollamaEngine bool, modelPath string, gpuLibs []string, out io.W
 	}
 
 	slog.Info("starting runner", "cmd", cmd)
-	slog.Debug("subprocess", "", filteredEnv(cmd.Env))
+	slog.Debug("subprocess", "filteredEnv", filteredEnv(cmd.Env))
 
 	if err = cmd.Start(); err != nil {
 		return nil, 0, err
