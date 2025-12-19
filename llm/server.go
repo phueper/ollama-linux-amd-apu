@@ -52,6 +52,7 @@ func (e filteredEnv) LogValue() slog.Value {
 				strings.HasPrefix(key, "GPU_"),
 				strings.HasPrefix(key, "HSA_"),
 				strings.HasPrefix(key, "GGML_"),
+				strings.HasPrefix(key, "AMD_"),
 				slices.Contains([]string{
 					"PATH",
 					"LD_LIBRARY_PATH",
