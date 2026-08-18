@@ -292,7 +292,7 @@ COPY --from=build /bin/ollama /bin/ollama
 FROM ${FLAVOR} AS image-archive
 COPY --from=build /bin/ollama /bin/ollama
 
-FROM ubuntu:24.04
+FROM ubuntu:25.10
 ARG APT_MIRROR=http://archive.ubuntu.com/ubuntu
 ARG APT_PORTS_MIRROR=http://ports.ubuntu.com/ubuntu-ports
 RUN sed -i \
