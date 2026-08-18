@@ -300,7 +300,7 @@ RUN sed -i \
         -e "s|http://ports.ubuntu.com/ubuntu-ports|$APT_PORTS_MIRROR|g" \
         /etc/apt/sources.list.d/ubuntu.sources \
     && apt-get update \
-    && apt-get install -y ca-certificates libvulkan1 libopenblas0 \
+    && apt-get install -y ca-certificates libvulkan1 libopenblas0 rocminfo \
     && sed -i \
         -e "s|$APT_MIRROR|http://archive.ubuntu.com/ubuntu|g" \
         -e "s|$APT_PORTS_MIRROR|http://ports.ubuntu.com/ubuntu-ports|g" \
