@@ -40,6 +40,7 @@ func filteredEnvLogKey(key string) bool {
 		strings.HasPrefix(key, "HIP_") ||
 		strings.HasPrefix(key, "HSA_") ||
 		strings.HasPrefix(key, "GGML_") ||
+		strings.HasPrefix(key, "AMD_") ||
 		slices.Contains([]string{
 			"PATH",
 			"LD_LIBRARY_PATH",
